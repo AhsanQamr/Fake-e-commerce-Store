@@ -1,8 +1,11 @@
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 const ProductDetails = () => {
     const { id } = useParams();
     const [product, setProduct] = useState({});
+
+
+
     useEffect(() => {
         let componentMounted = true;
         const getProductData = async () => {
@@ -35,8 +38,18 @@ const ProductDetails = () => {
                     <div className="d-flex justify-content-between align-items-center">
                         <span className="badge badge-pill badge-success text-bg-warning">In Stock</span>
                     </div>
+                    <div className="d-flex justify-content-center align-items-center">
+                        <form className="form-inline">
+                            <label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">Quantity</label>
+                            <input type="number" className="form-control" id="inlineFormCustomSelectPref" placeholder="0" min={0} max={10} />
+                        </form>
+                    </div>
                     <div className="btn-group btn-lg" style={{margin: ' 2rem 0 5.2rem 0'}}>
-                        <button type="button" className="btn btn-dark border border-5 border-dark rounded"> Add to Cart</button>
+                        <NavLink to="/cart" className="btn btn-dark">
+                            <button type="button" className="btn btn-dark">
+                                Add to Cart
+                            </button>
+                        </NavLink>
                     </div>
                 </div> 
             </div>

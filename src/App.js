@@ -4,6 +4,7 @@ import NavBar from './Components/UI/NavBar';
 import Products from './Components/Products/Products';
 import Footer from './Components/UI/Footer';
 import ProductDetails from './Components/Products/ProductDetails';
+import Cart from './Components/Cart/Cart';
 import { useState, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
@@ -36,6 +37,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Products items={data} />} />
         <Route path="/products/:id" element={<ProductDetails />} />
+        <Route path="*" element={<h1 style={{marginTop: '7rem'}} >404 Not Found</h1>} />
+        <Route path="/cart" element={<Cart />} />
       </Routes>
       
       <Footer />
