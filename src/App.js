@@ -1,23 +1,44 @@
-import logo from './logo.svg';
 import './App.css';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import NavBar from './Components/UI/NavBar';
+import Products from './Components/Products/Products';
+import Footer from './Components/UI/Footer';
+import ProductDetails from './Components/Products/ProductDetails';
+import { useState, useEffect } from 'react';
+import { Route, Routes } from 'react-router-dom';
 
 function App() {
+
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let componentMounted = true;
+    const getProductData = async () => {
+      setLoading(true);
+      const response = await fetch('https://fakestoreapi.com/products');
+      if (componentMounted) {
+        const data = await response.json();
+        setData(data);
+        setLoading(false);
+      }
+    };
+    getProductData();
+    return () => {
+      componentMounted = false;
+    };
+  }, []);
+
   return (
+
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<Products items={data} />} />
+        <Route path="/products/:id" element={<ProductDetails />} />
+      </Routes>
+      
+      <Footer />
     </div>
   );
 }
